@@ -12,7 +12,7 @@ public class Post implements Serializable {
     private long id;
     private String title;
     private String content;
-    private String writerUserId;
+    private String write\rUserId;
     private LocalDateTime writeTime;
     private int viewCount;
 

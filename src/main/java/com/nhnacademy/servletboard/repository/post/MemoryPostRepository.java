@@ -1,7 +1,7 @@
 package com.nhnacademy.servletboard.repository.post;
 
 import com.nhnacademy.servletboard.domain.post.Post;
-import com.nhnacademy.servletboard.exception.NonPostException;
+import com.nhnacademy.servletboard.exception.PostNotExistException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +60,7 @@ public class MemoryPostRepository implements PostRepository {
 
     private void checkPost(long postId) {
         if (Objects.isNull(memory.get(postId))) {
-            throw new NonPostException();
+            throw new PostNotExistException();
         }
     }
 }
