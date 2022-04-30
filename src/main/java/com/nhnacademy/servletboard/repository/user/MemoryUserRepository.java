@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class MemoryUserRepository implements UserRepository {
 
@@ -28,7 +27,7 @@ public class MemoryUserRepository implements UserRepository {
 
     @Override
     public void modify(User user) {
-        if (Objects.isNull(memory.get(user.getId()))) {
+        if (!memory.containsKey(user.getId())) {
             throw new MemberNotExistException();
         }
 

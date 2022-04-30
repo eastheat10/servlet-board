@@ -1,6 +1,7 @@
 package com.nhnacademy.servletboard.controller.profile;
 
 import com.nhnacademy.servletboard.controller.Command;
+import com.nhnacademy.servletboard.controller.user.ProfileFormController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.assertj.core.api.Assertions;
@@ -18,6 +19,6 @@ class ProfileFormControllerTest {
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 
-        Assertions.assertThat(command.execute(request, response)).isEqualTo("/sign/profileForm.jsp");
+        Assertions.assertThat(command.execute(request, response)).isEqualTo("/sign/profile-form.jsp");
     }
 }

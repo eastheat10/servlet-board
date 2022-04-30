@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="${lang}"/>
-<html>
+<fmt:setLocale value="${applicationScope.lang}"/>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
     <title>BOARD</title>
 </head>

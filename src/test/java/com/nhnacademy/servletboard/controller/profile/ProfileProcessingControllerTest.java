@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.nhnacademy.servletboard.controller.Command;
+import com.nhnacademy.servletboard.controller.user.ProfileCreateController;
 import com.nhnacademy.servletboard.repository.user.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,14 +28,14 @@ class ProfileProcessingControllerTest {
     @BeforeEach
     void setUp() {
         repository = mock(UserRepository.class);
-        command = new ProfileProcessingController(repository);
+        command = new ProfileCreateController(repository);
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);
 
         id = "id";
         password = "password";
         name = "name";
-        profileFileName = "/profile";
+        profileFileName = "/upload";
 
         when(req.getParameter("id")).thenReturn(id);
         when(req.getParameter("password")).thenReturn(password);

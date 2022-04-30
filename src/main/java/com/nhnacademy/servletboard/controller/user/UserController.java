@@ -23,6 +23,6 @@ public class UserController implements Command {
 
         req.setAttribute("findUser", findUser);
 
-        return "/";
+        return "profile.jsp";
     }
 }

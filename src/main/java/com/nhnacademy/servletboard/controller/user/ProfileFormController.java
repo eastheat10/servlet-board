@@ -1,4 +1,4 @@
-package com.nhnacademy.servletboard.controller.profile;
+package com.nhnacademy.servletboard.controller.user;
 
 import com.nhnacademy.servletboard.controller.Command;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +8,6 @@ public class ProfileFormController implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        return "/sign/profileForm.jsp";
+        return "profile-form.jsp";
     }
 }

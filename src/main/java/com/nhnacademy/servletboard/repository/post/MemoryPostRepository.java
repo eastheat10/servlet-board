@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class MemoryPostRepository implements PostRepository {
 
@@ -59,7 +58,7 @@ public class MemoryPostRepository implements PostRepository {
     }
 
     private void checkPost(long postId) {
-        if (Objects.isNull(memory.get(postId))) {
+        if (!memory.containsKey(postId)) {
             throw new PostNotExistException();
         }
     }

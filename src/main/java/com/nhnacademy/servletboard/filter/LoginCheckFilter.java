@@ -25,26 +25,22 @@ public class LoginCheckFilter implements Filter {
 
         log.info("request: {}", requestUri);
 
-        if (isWhiteList(request.getRequestURI())) {
+        if (isBlackList(requestUri)) {
             HttpSession session = request.getSession(false);
-            requestUri = request.getRequestURI();
+
             if (Objects.isNull(session) || Objects.isNull(session.getAttribute("user"))) {
-                ((HttpServletResponse) servletResponse).sendRedirect("/sign/loginForm.jsp");
+                ((HttpServletResponse) servletResponse).sendRedirect("/user/login-form.jsp");
                 return;
             }
-        }
-
-        if (!requestUri.startsWith("/login")) {
-            servletRequest.setAttribute("from", requestUri);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private boolean isWhiteList(String uri) {
-        return !uri.equals("/logout.do")
-            && !uri.equals("/sign/loginForm.jsp")
-            && !uri.equals("/login.do")
-            && !uri.equals("/change-lang.do");
+    private boolean isBlackList(String uri) {
+        return !(uri.equals("/logout.do")
+            || uri.equals("/user/login-form.jsp")
+            || uri.equals("/login.do")
+            || uri.equals("/change-lang.do"));
     }
 }

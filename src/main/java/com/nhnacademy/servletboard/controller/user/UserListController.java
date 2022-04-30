@@ -21,6 +21,6 @@ public class UserListController implements Command {
         List<User> users = userRepository.getUsers();
         req.setAttribute("users", users);
 
-        return "/";
+        return "profiles.jsp";
     }
 }

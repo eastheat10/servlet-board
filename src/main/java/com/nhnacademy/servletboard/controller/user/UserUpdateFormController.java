@@ -1,16 +1,17 @@
-package com.nhnacademy.servletboard.controller.profile;
+package com.nhnacademy.servletboard.controller.user;
 
 import com.nhnacademy.servletboard.controller.Command;
 import com.nhnacademy.servletboard.domain.user.User;
 import com.nhnacademy.servletboard.repository.user.UserRepository;
+import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ProfileProcessingController implements Command {
+public class UserUpdateFormController implements Command {
 
     private final UserRepository userRepository;
 
-    public ProfileProcessingController(UserRepository userRepository) {
+    public UserUpdateFormController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -18,13 +19,11 @@ public class ProfileProcessingController implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
 
         String id = req.getParameter("id");
-        String password = req.getParameter("password");
-        String name = req.getParameter("name");
-        String profileFileName = req.getParameter("profileFileName");
 
-        User user = new User(id, password, name, profileFileName);
-        userRepository.add(user);
+        User updateUser = userRepository.getUser(id);
 
-        return "redirect:/";
+        req.setAttribute("updateUser", updateUser);
+
+        return "profile-update.jsp";
     }
 }

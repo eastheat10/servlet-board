@@ -12,21 +12,19 @@ public class Post implements Serializable {
     private long id;
     private String title;
     private String content;
-    private String write\rUserId;
+    private String writerUserId;
     private LocalDateTime writeTime;
     private int viewCount;
 
-    public Post(long id, String title, String content, String writerUserId,
-                LocalDateTime writeTime) {
-        this.id = id;
+    public Post(String title, String content, String writerUserId) {
         this.title = title;
         this.content = content;
         this.writerUserId = writerUserId;
-        this.writeTime = writeTime;
-        this.viewCount = 0;
+        this.writeTime = LocalDateTime.now().withNano(0);
+        this.viewCount = 1;
     }
 
-    void increaseViewCount() {
+    public void increaseViewCount() {
         viewCount++;
     }
 }

@@ -11,13 +11,11 @@ class PostTest {
     @Test
     @DisplayName("게시물 조회수 증가")
     void increaseViewCount() {
-        long id = 1L;
         String title = "title";
         String content = "content";
         String writeUserId = "user";
-        LocalDateTime writeTime = LocalDateTime.now();
 
-        Post post = spy(new Post(id, title, content, writeUserId, writeTime));
+        Post post = spy(new Post(title, content, writeUserId));
 
         post.increaseViewCount();
 

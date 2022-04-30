@@ -6,19 +6,26 @@ import com.nhnacademy.servletboard.repository.user.UserRepository;
 import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class UserUpdateController implements Command {
+@MultipartConfig(
+    location = "/tmp",
+    maxFileSize = -1L,
+    maxRequestSize = -1L,
+    fileSizeThreshold = 1024
+)
+public class ProfileCreateController implements Command {
 
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
     private final UserRepository userRepository;
 
-    public UserUpdateController(UserRepository userRepository) {
+    public ProfileCreateController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -59,11 +66,8 @@ public class UserUpdateController implements Command {
             e.printStackTrace();
         }
 
-        User updateUser = userRepository.getUser(id);
-        updateUser.setName(name);
-        updateUser.setPassword(password);
-        updateUser.setProfileFileName(fileName);
-        userRepository.modify(updateUser);
+        User user = new User(id, password, name, fileName);
+        userRepository.add(user);
 
         return "redirect:user.do?id=" + id;
     }

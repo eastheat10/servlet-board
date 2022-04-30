@@ -43,7 +43,7 @@ class UserUpdateControllerTest {
         id = "id";
         password = "password";
         name = "name";
-        profileFileName = "/profile";
+        profileFileName = "/upload";
 
         doNothing().when(userRepository).modify(any());
         doNothing().when(user).setId(id);

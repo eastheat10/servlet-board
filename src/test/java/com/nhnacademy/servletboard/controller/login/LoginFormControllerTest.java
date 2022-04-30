@@ -19,6 +19,6 @@ class LoginFormControllerTest {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
 
-        Assertions.assertThat(command.execute(req, resp)).isEqualTo("/sign/loginForm.jsp");
+        Assertions.assertThat(command.execute(req, resp)).isEqualTo("/user/login-form.jsp");
     }
 }
