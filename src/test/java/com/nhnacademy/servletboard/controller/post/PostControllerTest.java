@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 import com.nhnacademy.servletboard.controller.Command;
 import com.nhnacademy.servletboard.domain.post.Post;
 import com.nhnacademy.servletboard.repository.post.PostRepository;
+import com.nhnacademy.servletboard.repository.user.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ class PostControllerTest {
 
     Command command;
     PostRepository postRepository;
+    UserRepository userRepository;
     Post post;
 
     HttpServletRequest req;
@@ -35,7 +37,8 @@ class PostControllerTest {
     void setUp() {
 
         postRepository = mock(PostRepository.class);
-        command = new PostController(postRepository);
+        userRepository = mock(UserRepository.class);
+        command = new PostController(postRepository, userRepository);
         post = mock(Post.class);
 
         req = mock(HttpServletRequest.class);

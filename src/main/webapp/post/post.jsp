@@ -18,6 +18,11 @@
     <p>
         <fmt:message key="hits"/>: ${requestScope.findPost.viewCount}
     </p>
+    <div>
+        <fmt:message key="profile"/>
+        <img src="/img.do?img=${requestScope.profile}"
+             alt="${requestScope.findPost.writerUserId}" style="width: 100px;"/>
+    </div>
     <p>
         <fmt:message key="writer"/>: ${requestScope.findPost.writerUserId}
     </p>

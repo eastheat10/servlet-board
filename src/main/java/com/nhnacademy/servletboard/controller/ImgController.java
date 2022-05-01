@@ -1,6 +1,5 @@
 package com.nhnacademy.servletboard.controller;
 
-import com.nhnacademy.servletboard.repository.user.UserRepository;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,12 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ImgController implements Command {
-
-    private final UserRepository userRepository;
-
-    public ImgController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -35,12 +28,15 @@ public class ImgController implements Command {
             File profile = new File(fullPath);
             Path profilePath = Path.of(fullPath);
 
-            FileInputStream in = new FileInputStream(profile);
+            try (FileInputStream in = new FileInputStream(profile)) {
 
-            byte[] buf = new byte[(int) Files.size(profilePath)];
+                byte[] buf = new byte[(int) Files.size(profilePath)];
 
-            in.read(buf);
-            out.write(buf);
+                int t;
+                while ((t = in.read(buf)) > 0) {
+                    out.write(buf, 0, t);
+                }
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

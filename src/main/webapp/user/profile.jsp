@@ -18,7 +18,7 @@
     </p>
     <div>
         <fmt:message key="profile"/>
-        <img src="img.do?img=${findUser.profileFileName}"
+        <img src="/img.do?img=${requestScope.findUser.profileFileName}"
              alt="${requestScope.findUser.id}" style="width: 100px;"/>
     </div>
 

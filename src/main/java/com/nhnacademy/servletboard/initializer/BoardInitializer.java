@@ -40,7 +40,8 @@ public class BoardInitializer implements ServletContainerInitializer {
 
         PostRepository postRepository = new MemoryPostRepository();
         servletContext.setAttribute("postRepository", postRepository);
-
         servletContext.setAttribute("lang", "ko");
+
+        servletContext.setInitParameter("counterFile", "counter.txt");
     }
 }

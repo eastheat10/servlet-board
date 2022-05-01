@@ -20,6 +20,15 @@
         </a>
     </div>
 
+    <div>
+        <p>
+            <fmt:message key="loginCounter" />: ${applicationScope.sessionCount}
+        </p>
+        <p>
+            <fmt:message key="visitor" />: ${applicationScope.counter}
+        </p>
+    </div>
+
     <c:choose>
         <c:when test="${sessionScope.user eq null}">
             <a href="login.do">

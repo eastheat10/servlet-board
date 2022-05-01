@@ -109,8 +109,9 @@ public class FrontServlet extends HttpServlet {
             command = new UserUpdateController(userRepository);
         } else if ("/user/delete.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
             command = new UserDeleteController(userRepository);
-        } else if ("/user/img.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new ImgController(userRepository);
+        }
+        else if ("/img.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
+            command = new ImgController();
         }
 
         // POST
@@ -121,7 +122,7 @@ public class FrontServlet extends HttpServlet {
         } else if ("/post/list.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
             command = new PostListController(postRepository);
         } else if ("/post/post.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new PostController(postRepository);
+            command = new PostController(postRepository, userRepository);
         } else if ("/post/update.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
             command = new PostUpdateFormController(postRepository);
         } else if ("/post/update.do".equals(servletPath) && POST.equalsIgnoreCase(method)) {
