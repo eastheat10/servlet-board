@@ -50,7 +50,7 @@
             <a href="user/profile.do"><fmt:message key="addUser"/></a>
         </c:when>
         <c:otherwise>
-            <a href="post/list.do"><fmt:message key="postList"/></a>
+            <a href="post/list.do?size=10&page=1"><fmt:message key="postList"/></a>
             <a href="post/create.do"><fmt:message key="addPost"/></a>
         </c:otherwise>
     </c:choose>

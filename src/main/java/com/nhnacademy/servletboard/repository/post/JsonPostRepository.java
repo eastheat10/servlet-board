@@ -2,6 +2,7 @@ package com.nhnacademy.servletboard.repository.post;
 
 import com.nhnacademy.servletboard.domain.post.Post;
 import com.nhnacademy.servletboard.exception.PostNotExistException;
+import com.nhnacademy.servletboard.page.Page;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,12 @@ public class JsonPostRepository implements PostRepository {
     private final Map<Long, Post> memory;
 
     public JsonPostRepository(Map<Long, Post> memory) {
-        postId = 1;
         this.memory = memory;
+        postId = memory.values()
+                       .stream()
+                       .map(Post::getId)
+                       .max((i, j) -> (int) (i - j))
+                       .orElse(1L) + 1;
     }
 
     @Override
@@ -60,6 +65,11 @@ public class JsonPostRepository implements PostRepository {
         if (!memory.containsKey(postId)) {
             throw new PostNotExistException();
         }
+    }
+
+    @Override
+    public Page<Post> getPagedPosts(int page, int size) {
+        return new Page<>(new ArrayList<>(memory.values()), page, size);
     }
 
     @Override

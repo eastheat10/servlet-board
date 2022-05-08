@@ -2,6 +2,7 @@ package com.nhnacademy.servletboard.repository.post;
 
 import com.nhnacademy.servletboard.domain.post.Post;
 import com.nhnacademy.servletboard.exception.PostNotExistException;
+import com.nhnacademy.servletboard.page.Page;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +62,11 @@ public class MemoryPostRepository implements PostRepository {
         if (!memory.containsKey(postId)) {
             throw new PostNotExistException();
         }
+    }
+
+    @Override
+    public Page<Post> getPagedPosts(int page, int size) {
+        return new Page<>(new ArrayList<>(memory.values()), page, size);
     }
 
     @Override
