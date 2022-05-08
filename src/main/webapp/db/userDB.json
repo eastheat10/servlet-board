@@ -1,0 +1,8 @@
+{
+  "admin" : {
+    "id": "admin",
+    "password": "12345",
+    "name": "관리자",
+    "profileFileName": ""
+  }
+}

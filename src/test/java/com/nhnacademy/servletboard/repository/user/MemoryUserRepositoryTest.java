@@ -1,9 +1,16 @@
 package com.nhnacademy.servletboard.repository.user;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.nhnacademy.servletboard.domain.user.User;
+import com.nhnacademy.servletboard.exception.MemberExistException;
+import com.nhnacademy.servletboard.exception.MemberNotExistException;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,14 +35,31 @@ class MemoryUserRepositoryTest {
     @DisplayName("사용자 추가")
     void add() {
         userRepository.add(user);
-        verify(user, Mockito.times(1)).getId();
+        verify(user, Mockito.times(2)).getId();
+    }
+
+    @Test
+    @DisplayName("이미 존재하는 아이디로 사용자 추가")
+    void add_fail() {
+        userRepository.add(user);
+
+        assertThatThrownBy(() -> userRepository.add(user))
+            .isInstanceOf(MemberExistException.class)
+            .hasMessageContaining(user.getId());
     }
 
     @Test
     @DisplayName("사용자 정보 수정")
     void modify() {
         userRepository.modify(user);
-        verify(user, Mockito.times(1)).getId();
+        verify(user, Mockito.times(2)).getId();
+    }
+
+    @Test
+    @DisplayName("없는 사용자 수정")
+    void modify_fail() {
+        assertThatThrownBy(() -> userRepository.modify(user))
+            .isInstanceOf(MemberNotExistException.class);
     }
 
     @Test

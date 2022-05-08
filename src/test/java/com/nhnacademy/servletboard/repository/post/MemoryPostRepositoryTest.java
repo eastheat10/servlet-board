@@ -2,7 +2,6 @@ package com.nhnacademy.servletboard.repository.post;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -11,7 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.nhnacademy.servletboard.domain.post.Post;
-import com.nhnacademy.servletboard.exception.NonPostException;
+import com.nhnacademy.servletboard.exception.PostNotExistException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +45,7 @@ class MemoryPostRepositoryTest {
     void modify_fail() {
 
         assertThatThrownBy(() -> postRepository.modify(post))
-            .isInstanceOf(NonPostException.class);
+            .isInstanceOf(PostNotExistException.class);
     }
 
     @Test
@@ -64,7 +63,7 @@ class MemoryPostRepositoryTest {
     @DisplayName("존재하지 않는 게시물 삭제")
     void remove_fail() {
         assertThatThrownBy(() -> postRepository.remove(postId))
-            .isInstanceOf(NonPostException.class);
+            .isInstanceOf(PostNotExistException.class);
     }
 
     @Test
@@ -83,7 +82,7 @@ class MemoryPostRepositoryTest {
     @DisplayName("존재하지 않는 게시물 조회")
     void getPost_fail() {
         assertThatThrownBy(() -> postRepository.getPost(postId))
-            .isInstanceOf(NonPostException.class);
+            .isInstanceOf(PostNotExistException.class);
     }
 
     @Test
