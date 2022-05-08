@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import com.nhnacademy.servletboard.controller.Command;
 import com.nhnacademy.servletboard.domain.post.Post;
+import com.nhnacademy.servletboard.domain.user.User;
 import com.nhnacademy.servletboard.repository.post.PostRepository;
 import com.nhnacademy.servletboard.repository.user.UserRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ class PostControllerTest {
     PostRepository postRepository;
     UserRepository userRepository;
     Post post;
+    User user;
 
     HttpServletRequest req;
     HttpServletResponse resp;
@@ -40,16 +42,23 @@ class PostControllerTest {
         userRepository = mock(UserRepository.class);
         command = new PostController(postRepository, userRepository);
         post = mock(Post.class);
+        user = mock(User.class);
 
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);
 
         this.postId = 1L;
 
+        // TODO
         when(req.getParameter("id")).thenReturn(String.valueOf(postId));
         when(postRepository.getPost(anyLong())).thenReturn(post);
+        when(post.getWriterUserId()).thenReturn("userId");
+        when(userRepository.getUser("userId")).thenReturn(user);
 
-        doNothing().when(req).setAttribute(anyString(), any());
+        when(user.getProfileFileName()).thenReturn("profileName");
+
+        doNothing().when(req).setAttribute(eq("findPost"), any());
+        doNothing().when(req).setAttribute(eq("profile"), eq("profileName"));
     }
 
     @Test
@@ -59,7 +68,8 @@ class PostControllerTest {
         String path = command.execute(req, resp);
 
         verify(postRepository, times(1)).getPost(anyLong());
-        verify(req, times(1)).setAttribute(anyString(), any());
+        verify(req, times(1)).setAttribute("findPost", post);
+        verify(req, times(1)).setAttribute("profile", "profileName");
 
         assertThat(path).isEqualTo("post.jsp");
     }

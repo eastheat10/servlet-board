@@ -4,17 +4,15 @@ import com.nhnacademy.servletboard.domain.user.User;
 import com.nhnacademy.servletboard.exception.MemberExistException;
 import com.nhnacademy.servletboard.exception.MemberNotExistException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MemoryUserRepository implements UserRepository {
+public class JsonUserRepository implements UserRepository {
 
     private final Map<String, User> memory;
 
-    public MemoryUserRepository() {
-        this.memory = new HashMap<>();
+    public JsonUserRepository(Map<String, User> memory) {
+        this.memory = memory;
     }
 
     @Override
@@ -54,5 +52,4 @@ public class MemoryUserRepository implements UserRepository {
     public Map<String, User> getMemory() {
         return memory;
     }
-
 }

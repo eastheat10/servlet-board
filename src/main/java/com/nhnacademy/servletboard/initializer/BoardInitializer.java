@@ -1,11 +1,19 @@
 package com.nhnacademy.servletboard.initializer;
 
-import com.nhnacademy.servletboard.domain.user.Admin;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.servletboard.domain.post.Post;
 import com.nhnacademy.servletboard.domain.user.User;
-import com.nhnacademy.servletboard.repository.post.MemoryPostRepository;
+import com.nhnacademy.servletboard.repository.post.JsonPostRepository;
 import com.nhnacademy.servletboard.repository.post.PostRepository;
-import com.nhnacademy.servletboard.repository.user.MemoryUserRepository;
+import com.nhnacademy.servletboard.repository.user.JsonUserRepository;
 import com.nhnacademy.servletboard.repository.user.UserRepository;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
@@ -28,20 +36,51 @@ public class BoardInitializer implements ServletContainerInitializer {
 
         log.info("Initialize");
 
-        Admin admin = new Admin("admin", "12345", "관리자");
-        User user1 = new User("user1", "1234", "사용자1", "/");
-        User user2 = new User("user2", "1234", "사용자2", "/");
+        UserRepository userRepository = new JsonUserRepository(getUserData(servletContext));
+        PostRepository postRepository = new JsonPostRepository(getPostData(servletContext));
 
-        UserRepository userRepository = new MemoryUserRepository();
-        userRepository.add(admin);
-        userRepository.add(user1);
-        userRepository.add(user2);
         servletContext.setAttribute("userRepository", userRepository);
-
-        PostRepository postRepository = new MemoryPostRepository();
         servletContext.setAttribute("postRepository", postRepository);
         servletContext.setAttribute("lang", "ko");
 
         servletContext.setInitParameter("counterFile", "counter.txt");
+    }
+
+    private Map<String, User> getUserData(ServletContext servletContext) {
+
+        String dir = servletContext.getRealPath("db");
+        String dbName = "userDB.json";
+
+        servletContext.setAttribute("userDB", dbName);
+
+        Map<String, User> map;
+        try (FileInputStream fis = new FileInputStream(dir + File.separator + dbName)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            map = objectMapper.readValue(fis, new TypeReference<>() {
+            });
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            map = new HashMap<>();
+        }
+        return Optional.ofNullable(map).orElse(new HashMap<>());
+    }
+
+    private Map<Long, Post> getPostData(ServletContext servletContext) {
+
+        String dir = servletContext.getRealPath("db");
+        String dbName = "postDB.json";
+
+        servletContext.setAttribute("postDB", dbName);
+
+        Map<Long, Post> map;
+        try (FileInputStream fis = new FileInputStream(dir + File.separator + dbName)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            map = objectMapper.readValue(fis, new TypeReference<>() {
+            });
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            map = new HashMap<>();
+        }
+        return Optional.ofNullable(map).orElse(new HashMap<>());
     }
 }

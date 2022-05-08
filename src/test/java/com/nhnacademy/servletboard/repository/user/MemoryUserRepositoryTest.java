@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import com.nhnacademy.servletboard.domain.user.User;
 import com.nhnacademy.servletboard.exception.MemberExistException;
 import com.nhnacademy.servletboard.exception.MemberNotExistException;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

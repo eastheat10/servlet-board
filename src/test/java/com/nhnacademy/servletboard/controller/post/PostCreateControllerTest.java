@@ -4,10 +4,11 @@ import static org.mockito.Mockito.*;
 
 import com.nhnacademy.servletboard.controller.Command;
 import com.nhnacademy.servletboard.domain.post.Post;
+import com.nhnacademy.servletboard.domain.user.User;
 import com.nhnacademy.servletboard.repository.post.PostRepository;
-import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ class PostCreateControllerTest {
     Command command;
     PostRepository postRepository;
     Post post;
+    User user;
 
     HttpServletRequest req;
     HttpServletResponse resp;
@@ -33,6 +35,7 @@ class PostCreateControllerTest {
         postRepository = mock(PostRepository.class);
         command = new PostCreateController(postRepository);
         post = mock(Post.class);
+        user = mock(User.class);
 
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);
@@ -41,9 +44,13 @@ class PostCreateControllerTest {
         this.content = "content";
         this.writerUserId = "writerUserId";
 
+        HttpSession session = mock(HttpSession.class);
+
         when(req.getParameter("title")).thenReturn(title);
         when(req.getParameter("content")).thenReturn(content);
-        when(req.getParameter("writerUserId")).thenReturn(writerUserId);
+        when(req.getSession()).thenReturn(session);
+        when(session.getAttribute("user")).thenReturn(user);
+        when(user.getId()).thenReturn(writerUserId);
 
         when(postRepository.register(post)).thenReturn(postId);
     }

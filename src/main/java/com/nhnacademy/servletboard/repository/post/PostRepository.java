@@ -2,6 +2,7 @@ package com.nhnacademy.servletboard.repository.post;
 
 import com.nhnacademy.servletboard.domain.post.Post;
 import java.util.List;
+import java.util.Map;
 
 public interface PostRepository {
 
@@ -14,4 +15,6 @@ public interface PostRepository {
     Post getPost(long id);
 
     List<Post> getPosts();
+
+    Map<Long, Post> getMemory();
 }

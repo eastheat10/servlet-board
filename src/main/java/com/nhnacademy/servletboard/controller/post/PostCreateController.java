@@ -21,9 +21,9 @@ public class PostCreateController implements Command {
 
         String title = req.getParameter("title");
         String content = req.getParameter("content");
-        String writerUserId = ((User) req.getSession().getAttribute("user")).getId();
+        User writer = (User) req.getSession().getAttribute("user");
 
-        Post createPost = new Post(title, content, writerUserId);
+        Post createPost = new Post(title, content, writer.getId());
 
         long postId = postRepository.register(createPost);
 

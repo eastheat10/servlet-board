@@ -3,18 +3,17 @@ package com.nhnacademy.servletboard.repository.post;
 import com.nhnacademy.servletboard.domain.post.Post;
 import com.nhnacademy.servletboard.exception.PostNotExistException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MemoryPostRepository implements PostRepository {
+public class JsonPostRepository implements PostRepository {
 
     private long postId;
     private final Map<Long, Post> memory;
 
-    public MemoryPostRepository() {
+    public JsonPostRepository(Map<Long, Post> memory) {
         postId = 1;
-        this.memory = new HashMap<>();
+        this.memory = memory;
     }
 
     @Override

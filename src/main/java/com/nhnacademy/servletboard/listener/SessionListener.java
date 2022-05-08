@@ -1,4 +1,4 @@
-package com.nhnacademy.servletboard.controller.listener;
+package com.nhnacademy.servletboard.listener;
 
 import java.util.Objects;
 import javax.servlet.annotation.WebListener;
