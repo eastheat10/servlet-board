@@ -20,4 +20,6 @@ public interface PostRepository {
     Page<Post> getPagedPosts(int page, int size);
 
     Map<Long, Post> getMemory();
+
+    void setMemory(Map<Long, Post> memory);
 }

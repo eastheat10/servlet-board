@@ -1,7 +1,6 @@
 package com.nhnacademy.servletboard.repository.user;
 
 import com.nhnacademy.servletboard.domain.user.User;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +17,6 @@ public interface UserRepository {
     List<User> getUsers();
 
     Map<String, User> getMemory();
+
+    void loadMemory(Map<String, User> memory);
 }

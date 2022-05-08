@@ -2,28 +2,9 @@ package com.nhnacademy.servletboard;
 
 import com.nhnacademy.servletboard.controller.Command;
 import com.nhnacademy.servletboard.controller.ImgController;
-import com.nhnacademy.servletboard.controller.localization.ChangeLangController;
-import com.nhnacademy.servletboard.controller.login.LoginFormController;
-import com.nhnacademy.servletboard.controller.login.LoginProcessingController;
-import com.nhnacademy.servletboard.controller.login.LogoutController;
-import com.nhnacademy.servletboard.controller.post.PostController;
-import com.nhnacademy.servletboard.controller.post.PostCreateController;
-import com.nhnacademy.servletboard.controller.post.PostDeleteController;
-import com.nhnacademy.servletboard.controller.post.PostFormController;
-import com.nhnacademy.servletboard.controller.post.PostListController;
-import com.nhnacademy.servletboard.controller.post.PostUpdateController;
-import com.nhnacademy.servletboard.controller.post.PostUpdateFormController;
-import com.nhnacademy.servletboard.controller.user.ProfileCreateController;
-import com.nhnacademy.servletboard.controller.user.ProfileFormController;
-import com.nhnacademy.servletboard.controller.user.UserController;
-import com.nhnacademy.servletboard.controller.user.UserDeleteController;
-import com.nhnacademy.servletboard.controller.user.UserListController;
-import com.nhnacademy.servletboard.controller.user.UserUpdateController;
-import com.nhnacademy.servletboard.controller.user.UserUpdateFormController;
-import com.nhnacademy.servletboard.repository.post.PostRepository;
-import com.nhnacademy.servletboard.repository.user.UserRepository;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,6 +28,7 @@ public class FrontServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
 
         try {
+
             Command command = resolveServlet(req);
 
             String view = command.execute(req, resp);
@@ -72,68 +54,62 @@ public class FrontServlet extends HttpServlet {
 
     private Command resolveServlet(HttpServletRequest req) {
 
+        ServletContext servletContext = req.getServletContext();
         String servletPath = req.getServletPath();
         String method = req.getMethod();
 
         log.info("path: {}", servletPath);
 
-        UserRepository userRepository =
-            (UserRepository) getServletContext().getAttribute("userRepository");
-
-        PostRepository postRepository =
-            (PostRepository) getServletContext().getAttribute("postRepository");
-
         Command command = null;
 
         // LOGIN
         if ("/login.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new LoginFormController();
+            command = (Command) servletContext.getAttribute("loginFormController");
         } else if ("/login.do".equals(servletPath) && POST.equalsIgnoreCase(method)) {
-            command = new LoginProcessingController(userRepository);
+            command = (Command) servletContext.getAttribute("loginProcessingController");
         } else if ("/logout.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new LogoutController();
+            command = (Command) servletContext.getAttribute("logoutController");
         }
 
         // PROFILE
         else if ("/user/profile.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new ProfileFormController();
+            command = (Command) servletContext.getAttribute("profileFormController");
         } else if ("/user/profile.do".equals(servletPath) && POST.equalsIgnoreCase(method)) {
-            command = new ProfileCreateController(userRepository);
+            command = (Command) servletContext.getAttribute("profileCreateController");
         } else if ("/user/profiles.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new UserListController(userRepository);
+            command = (Command) servletContext.getAttribute("userListController");
         } else if ("/user/user.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new UserController(userRepository);
+            command = (Command) servletContext.getAttribute("userController");
         } else if ("/user/update.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new UserUpdateFormController(userRepository);
+            command = (Command) servletContext.getAttribute("userUpdateFormController");
         } else if ("/user/update.do".equals(servletPath) && POST.equalsIgnoreCase(method)) {
-            command = new UserUpdateController(userRepository);
+            command = (Command) servletContext.getAttribute("userUpdateController");
         } else if ("/user/delete.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new UserDeleteController(userRepository);
-        }
-        else if ("/img.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new ImgController();
+            command = (Command) servletContext.getAttribute("userDeleteController");
+        } else if ("/img.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
+            command = (Command) servletContext.getAttribute("imgController");
         }
 
         // POST
         else if ("/post/create.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new PostFormController();
+            command = (Command) servletContext.getAttribute("postFormController");
         } else if ("/post/create.do".equals(servletPath) && POST.equalsIgnoreCase(method)) {
-            command = new PostCreateController(postRepository);
+            command = (Command) servletContext.getAttribute("postCreateController");
         } else if ("/post/list.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new PostListController(postRepository);
+            command = (Command) servletContext.getAttribute("postListController");
         } else if ("/post/post.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new PostController(postRepository, userRepository);
+            command = (Command) servletContext.getAttribute("postController");
         } else if ("/post/update.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new PostUpdateFormController(postRepository);
+            command = (Command) servletContext.getAttribute("postUpdateFormController");
         } else if ("/post/update.do".equals(servletPath) && POST.equalsIgnoreCase(method)) {
-            command = new PostUpdateController(postRepository);
+            command = (Command) servletContext.getAttribute("postUpdateController");
         } else if ("/post/delete.do".equals(servletPath) && GET.equalsIgnoreCase(method)) {
-            command = new PostDeleteController(postRepository);
+            command = (Command) servletContext.getAttribute("postDeleteController");
         }
 
         // LOCALIZATION
         else if ("/change-lang.do".equals(servletPath)) {
-            command = new ChangeLangController();
+            command = (Command) servletContext.getAttribute("changeLangController");
         }
 
         return command;

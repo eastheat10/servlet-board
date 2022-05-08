@@ -1,5 +1,4 @@
-<%@ page import="com.nhnacademy.servletboard.page.Page" %>
-<%@ page import="com.nhnacademy.servletboard.domain.post.Post" %>
+<%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${applicationScope.lang}"/>
@@ -65,7 +64,7 @@
                         ${post.writerUserId}
                 </td>
                 <td>
-                        ${post.writeTime}
+                    <javatime:format value="${post.getWriteTime()}" pattern="yyyy-MM-dd HH:mm:ss"/>
                 </td>
             </tr>
         </c:forEach>

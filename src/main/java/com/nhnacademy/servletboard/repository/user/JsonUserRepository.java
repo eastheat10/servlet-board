@@ -6,14 +6,11 @@ import com.nhnacademy.servletboard.exception.MemberNotExistException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonUserRepository implements UserRepository {
 
-    private final Map<String, User> memory;
-
-    public JsonUserRepository(Map<String, User> memory) {
-        this.memory = memory;
-    }
+    private Map<String, User> memory;
 
     @Override
     public void add(User user) {
@@ -51,5 +48,13 @@ public class JsonUserRepository implements UserRepository {
     @Override
     public Map<String, User> getMemory() {
         return memory;
+    }
+
+    @Override
+    public void loadMemory(Map<String, User> memory) {
+        this.memory = new ConcurrentHashMap<>();
+        for (String s : memory.keySet()) {
+            this.memory.put(s, memory.get(s));
+        }
     }
 }

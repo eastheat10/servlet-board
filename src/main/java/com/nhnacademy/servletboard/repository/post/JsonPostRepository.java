@@ -4,27 +4,22 @@ import com.nhnacademy.servletboard.domain.post.Post;
 import com.nhnacademy.servletboard.exception.PostNotExistException;
 import com.nhnacademy.servletboard.page.Page;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 public class JsonPostRepository implements PostRepository {
 
-    private long postId;
-    private final Map<Long, Post> memory;
-
-    public JsonPostRepository(Map<Long, Post> memory) {
-        this.memory = memory;
-        postId = memory.values()
-                       .stream()
-                       .map(Post::getId)
-                       .max((i, j) -> (int) (i - j))
-                       .orElse(1L) + 1;
-    }
+    private Map<Long, Post> memory;
 
     @Override
     public long register(Post post) {
 
-        long newPostId = postId++;
+        long newPostId = memory.values()
+                               .stream()
+                               .map(Post::getId)
+                               .max(Comparator.comparingLong(i -> i))
+                               .orElse(0L) + 1;
 
         post.setId(newPostId);
         memory.put(newPostId, post);
@@ -75,5 +70,10 @@ public class JsonPostRepository implements PostRepository {
     @Override
     public Map<Long, Post> getMemory() {
         return memory;
+    }
+
+    @Override
+    public void setMemory(Map<Long, Post> memory) {
+        this.memory = memory;
     }
 }

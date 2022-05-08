@@ -1,3 +1,4 @@
+<%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${applicationScope.lang}"/>
@@ -13,7 +14,8 @@
             ${requestScope.findPost.title}
     </h2>
     <p>
-        <fmt:message key="writeDate"/>: ${requestScope.findPost.writeTime}
+        <fmt:message key="writeDate"/>:
+        <javatime:format value="${requestScope.findPost.writeTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
     </p>
     <p>
         <fmt:message key="hits"/>: ${requestScope.findPost.viewCount}
